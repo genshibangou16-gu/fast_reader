@@ -2,8 +2,6 @@
 
 'use strict';
 
-//document.documentElement.style.setProperty('--vh', `${window.innerHeight*0.01}px`);
-
 const page = document.getElementById('page');
 const textarea = document.getElementById('textarea');
 const left = document.getElementById('left');
