@@ -1,43 +1,77 @@
 <?php
 
-session_start();
-require_once('func.php');
+function replaceHtml($i) {
+	return htmlspecialchars($i, ENT_QUOTES, 'UTF-8');
+}
 
-sessionCheck();
+$head = <<<EOE
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>book card</title>
+	<link rel="stylesheet" href="style.css?ver1">
+	<meta name="robots" content="noindex">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#000000">
+</head>
+EOE;
 
-$csrfToken = genToken();
-$_SESSION['csrfToken'] = $csrfToken;
+if(isset($_GET['id'])) {
+    $id = replaceHtml($_GET['id']);
+    if(empty($id)) {
+        header('Location: /index.php', true, 302);
+        exit();
+    }else {
+        $pageMax = count(glob('books/' . $id . '/*')) - 1;
+        if(isset($_COOKIE[$id])) {
+            $pageNum = replaceHtml($_COOKIE[$id]);
+        }else {
+            $pageNum = 1;
+        }
+    }
+    echo $head;
+}else {
+	$books = glob('books/*');
+	$body = $head . '<body><div class="alin"><h1 class="alin">List of books</h1>';
+	foreach($books as $i) {
+		$index = json_decode(file_get_contents($i . '/index.json'), true);
+		$body = $body . '<a class="alin" href="index.php?id=' . substr($i, 6, 8) . '">' . $index['title'] . '</a>';
+	}
+	$body = $body . '</div></body>';
+	echo $body;
+	exit();
+}
 
 ?>
 
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Fast reader</title>
-	<meta name="robot" content="noindex">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="style/reset.css">
-	<link rel="stylesheet" href="style/style.css?<?=genUnique()?>">
-	<script src="script/font.js" defer></script>
-</head>
-
 <body>
-	<form action="read.php" method="post">
-		<input type='checkbox' class="mode" id="mode" name="mode">
-		<div class="wrapper__page">
-			<h1 class="wrapper__title">速読リーダー</h1>
-			<div>
-				<p class="wrapper__text">ダークモード/ライトモード</p>
-				<label for="mode" class="mode__label">
-					<img src="image/dark_mode.svg" alt="ダークモード" class="mode__image--dark">
-					<img src="image/light_mode.svg" alt="ライトモード" class="mode__image--light">
-				</label>
+	<div id="frame">
+		<div id="left"></div>
+		<div id="right"></div>
+		<div id="toolbar">
+			<div id="direction">
+				<p id="dir_sign"></p>
 			</div>
-			<input type="hidden" name="csrfToken" value="<?=$csrfToken?>">
-			<textarea name="inputText" class="wrapper__textarea" placeholder="速読したい文を入力してください"></textarea>
-			<input type="submit" class="wrapper__submit" value="送信">
+			<p id="textarea"></p>
+			<div id="info"><img id="info_img" src="info.svg" alt="info icon"></div>
 		</div>
-	</form>
+		<img id="page" src="//:0" class="hidden" alt="page image">
+		<div id="info_panel" class="hidden">
+			<p>タイトル</p>
+			<p class="td"></p>
+			<p>著者</p>
+			<p class="td"></p>
+			<p>出版社</p>
+			<p class="td"></p>
+			<p>出版年</p>
+			<p class="td"></p>
+		</div>
+	</div>
+	<input id="id" type="hidden" value="<?=$id?>">
+	<input id="pageMax" type="hidden" value="<?=$pageMax?>">
+	<input id="pageNum" type="hidden" value="<?=$pageNum?>">
+	
+	<script src="index.js?ver1" defer></script>
 </body>
 </html>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="func.php" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/fastreader/" local="133319203587804264" remote="133319205780000000" Dst="0" />
-<file name="index.php" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/fastreader/" local="133322540314818076" remote="133322540340000000" Dst="0" />
-<file name="read.php" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/fastreader/" local="133322540652121106" remote="133322540680000000" Dst="0" />
-<file name="error.php" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/fastreader/" local="133319209272271158" remote="133319209350000000" Dst="0" />
-<file name="test.php" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/fastreader/" local="133323212753209408" remote="133323213300000000" Dst="0" />
-<file name="parts.php" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/fastreader/" local="133320440175574039" remote="133320440550000000" Dst="0" />
-<file name="parts_api.php" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/fastreader/" local="133320442441933183" remote="133320446000000000" Dst="0" />
+<file name="index.php" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/" local="133113490518241509" remote="133113490580000000" Dst="0" />
+<file name="style.css" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/" local="133113487068216769" remote="133113487070000000" Dst="0" />
+<file name="index.js" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/" local="133113482895730999" remote="133113485020000000" Dst="0" />
+<file name="info.svg" server="book.sorabi.jp:58354//var/www/book.sorabi.jp/" local="133112597018552079" remote="133112597770000000" Dst="0" />
+<file name="index.js" server="test.sorabi.jp:58354//var/www/book.sorabi.jp/" local="133154730822833117" remote="133154732150000000" Dst="0" />
+<file name="index.php" server="test.sorabi.jp:58354//var/www/book.sorabi.jp/" local="133154734909748501" remote="133154735150000000" Dst="0" />
+<file name="info.svg" server="test.sorabi.jp:58354//var/www/book.sorabi.jp/" local="133112597770000000" remote="133112597770000000" Dst="0" />
+<file name="style.css" server="test.sorabi.jp:58354//var/www/book.sorabi.jp/" local="133153916484378528" remote="133153916570000000" Dst="0" />
+<file name="favicon.ico" server="test.sorabi.jp:58354//var/www/book.sorabi.jp/" local="133154739695314052" remote="133154740560000000" Dst="0" />
 </dwsync>
