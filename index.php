@@ -3,17 +3,16 @@
 <head>
 	<meta charset="utf-8">
 	<title>book card</title>
-	<link rel="stylesheet" href="style.css?ver1">
+	<link rel="stylesheet" href="./src/style.css">
 	<meta name="robots" content="noindex">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#000000">
 </head>
-<body>
 
 <!-- ここからPHP -->
 <?php
 // functions.phpから関数を読み込む
-require_once('functions.php');
+require_once('./src/functions.php');
 
 // idパラメーターの有無を確認
 if(isset($_GET['id'])) {
@@ -49,46 +48,32 @@ if(isset($_GET['id'])) {
 	// ~~~ パラメーターなし ~~~
 	// => 本リストを表示
 
-	// booksフォルダ内のフォルダ名を取得
-	$books = glob('books/*');
-	// booksフォルダ内にフォルダがない場合はトップページにリダイレクト
-	if(empty($books)) {
-		header('Location: /index.php', true, 302);
-		exit();
-	}
-	$body = <<<EOL
-	<div class="book_list">
-		<h1 class="book_list">List of books</h1>
-	EOL;
-	foreach($books as $i) {
-		$id = basename($i);
-		$bookInfo = getBookInfo($id);
-		$body = $body . '<a class="book_list" href="index.php?id=' . $id . '">' . $bookInfo['title'] . '</a>';
-	}
-	$body = $body . <<<EOL
-	</div>
-	</body>
-	EOL;
-	echo $body;
-	exit();
+	// list.phpを読み込む（本リストのHTMLを書き出し）
+	// ※ 本リストのHTMLはlist.phpに記述
+	// ※ 本リストのHTMLはここに直接書かない
+	require_once('./src/list.php');
+	exit(); // 本リストを表示したら終了（以降のHTMLは出力しない）
 }
 
 ?>
 <!-- ここまでPHP -->
 
+<!-- 以降は本ページのHTML -->
 <body>
 	<div id="frame">
 		<div id="left"></div>
 		<div id="right"></div>
 		<div id="toolbar">
-			<div id="direction">
-				<p id="dir_sign"></p>
+			<div id="home">
+				<img id="homeButton" src="./src/home.svg" alt="リストに戻る">
 			</div>
 			<p id="textarea"></p>
-			<div id="info"><img id="info_img" src="info.svg" alt="info icon"></div>
+			<div id="info">
+				<img id="infoButton" src="./src/info.svg" alt="本の情報を開く">
+			</div>
 		</div>
 		<img id="page" src="//:0" class="hidden" alt="page image">
-		<div id="info_panel" class="hidden">
+		<div id="infoPanel" class="hidden">
 			<p>タイトル</p>
 			<p class="td"></p>
 			<p>著者</p>
@@ -99,11 +84,13 @@ if(isset($_GET['id'])) {
 			<p class="td"></p>
 		</div>
 	</div>
+
+	<!-- JavaScriptで使う変数 -->
 	<input id="id" type="hidden" value="<?=$id?>">
 	<input id="pageMax" type="hidden" value="<?=$pageMax?>">
 	<input id="pageNum" type="hidden" value="<?=$pageNum?>">
 	<input id="extension" type="hidden" value="<?=$extension?>">
 	
-	<script src="index.js?ver1" defer></script>
+	<script src="./src/index.js" defer></script>
 </body>
 </html>
