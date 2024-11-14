@@ -21,11 +21,14 @@ CSS
 │  │  ├─ ...
 │  │  └─ index.json
 │  └─ ...
+├─ src
+│  ├─ function.php
+│  ├─ home.svg
+│  ├─ index.js
+│  ├─ info.svg
+│  └─ style.css
 ├─ favicon.ico
-├─ index.js
-├─ index.php
-├─ info.svg
-└─ style.css
+└─ index.php
 ```
 
 # 参考
