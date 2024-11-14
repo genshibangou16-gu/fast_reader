@@ -43,7 +43,7 @@ if(isset($_GET['id'])) {
 	}
 	// 本の拡張子を取得
 	// ※ 本の拡張子は全ページ同じと仮定
-	$extension = pathinfo(glob('books/' . $id . '/*')[$pageNum], PATHINFO_EXTENSION);
+	$extension = pathinfo(glob('books/' . $id . '/*')[0], PATHINFO_EXTENSION);
 }else {
 	// ~~~ パラメーターなし ~~~
 	// => 本リストを表示
