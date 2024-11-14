@@ -6,24 +6,24 @@ const page = document.getElementById('page');
 const textarea = document.getElementById('textarea');
 const left = document.getElementById('left');
 const right = document.getElementById('right');
-const dir_sign = document.getElementById('dir_sign');
-const info_img = document.getElementById('info_img');
-const info_panel = document.getElementById('info_panel');
+const infoButton = document.getElementById('infoButton');
+const homeButton = document.getElementById('homeButton');
+const infoPanel = document.getElementById('infoPanel');
 const id = document.getElementById('id').value;
 const td = document.querySelectorAll('.td');
 const pageMax = Number(document.getElementById('pageMax').value);
 const extension = document.getElementById('extension').value;
 
-let is_touched = false;
+let isTouched = false;
 let touchInfo = null;
 let callbackID = null;
 let startCoord = null;
 let pageNum = null;
 let direction = 1;
-let infoStatus = false;
+let isInfoPanelOpen = false;
 
-function load_index() {
-	pageMax = 
+// index.jsonの読み込み
+function loadBookInfo() {
 	textarea.innerHTML = `${pageNum}/${pageMax}ページ`;
 	fetch(`books/${id}/index.json`)
 	.then((response) => {
@@ -31,38 +31,25 @@ function load_index() {
 	})
 	.then((data) => {
 		if(data.direction) direction = Number(data.direction);
-		if(data.format) format = data.format;
 		window.requestAnimationFrame(() => {
 			if(data.title) td[0].innerHTML = data.title;
 			if(data.author) td[1].innerHTML = data.author;
 			if(data.publisher) td[2].innerHTML = data.publisher;
 			if(data.date) td[3].innerHTML = data.date;
-			if(direction == 1) {
-				dir_sign.innerHTML = '左';
-			}else {
-				dir_sign.innerHTML = '右';
-			}
+			if(direction === -1) direction = -1;
 			page.src = `books/${id}/${('00'+pageNum).slice(-2)}.${extension}`;
 			page.classList.remove('hidden');
 		});
 	})
 }
 
-function end() {
-	if(callbackID) {
-		window.cancelAnimationFrame(callbackID);
-		callbackID = null;
-	}
-	is_touched = false;
-	touchInfo = null;
-}
-
+// ページめくり
 function flip(n) {
 	window.cancelAnimationFrame(callbackID);
 	callbackID = null;
-	if(infoStatus) {
-		infoStatus = false;
-		info_panel.classList.add('hidden');
+	if(isInfoPanelOpen) {
+		isInfoPanelOpen = false;
+		infoPanel.classList.add('hidden');
 		return;
 	}
 	if(pageMax) {
@@ -70,11 +57,12 @@ function flip(n) {
 	}else {
 		textarea.innerHTML = `${n}ページ`;
 	}
-	page.src = `books/${id}/${('00'+pageNum).slice(-2)}.${format}`;
+	page.src = `books/${id}/${('00'+pageNum).slice(-2)}.${extension}`;
     document.cookie = `${id}=${n};max-age=31536000;secure`;
 }
 
-function flip_judge() {
+// ページめくりの判定
+function flipJudge() {
 	let diff = touchInfo.pageX - startCoord;
 	if(diff < -50) {
 		if(pageNum == 1 && direction == 1) return;
@@ -87,9 +75,23 @@ function flip_judge() {
 		pageNum = pageNum + direction;
 		window.requestAnimationFrame(flip.bind(null, pageNum));
 	}else {
-		callbackID = requestAnimationFrame(flip_judge);
+		callbackID = requestAnimationFrame(flipJudge);
 	}
 }
+
+// タッチ終了時の処理
+function touchTerminator() {
+	if(callbackID) {
+		window.cancelAnimationFrame(callbackID);
+		callbackID = null;
+	}
+	isTouched = false;
+	touchInfo = null;
+}
+
+//
+// Event listeners
+//
 
 window.addEventListener('DOMContentLoaded', () => {
     if(navigator.cookieEnabled) {
@@ -98,15 +100,15 @@ window.addEventListener('DOMContentLoaded', () => {
     }else {
         alert('This browser doesn\'t support the page-saving feature.');
     }
-	load_index();
+	loadBookInfo();
 })
 
 window.addEventListener('touchstart', (i) => {
-	if(!is_touched) {
-		is_touched = true;
+	if(!isTouched) {
+		isTouched = true;
 		startCoord = i.changedTouches[0].pageX;
 		touchInfo = i.changedTouches[0];
-		callbackID = requestAnimationFrame(flip_judge);
+		callbackID = requestAnimationFrame(flipJudge);
 	}else {
 		window.cancelAnimationFrame(callbackID);
 		callbackID = null;
@@ -118,11 +120,11 @@ window.addEventListener('touchmove', (i) => {
 })
 
 window.addEventListener('touchend', () => {
-	end();
+	touchTerminator();
 })
 
 window.addEventListener('touchcancel', () => {
-	end();
+	touchTerminator();
 })
 
 left.addEventListener('click', () => {
@@ -139,21 +141,15 @@ right.addEventListener('click', () => {
 	window.requestAnimationFrame(flip.bind(null, pageNum));
 })
 
-info_img.addEventListener('click', () => {
-	if(infoStatus) {
-		infoStatus = false;
+infoButton.addEventListener('click', () => {
+	if(isInfoPanelOpen) {
+		isInfoPanelOpen = false;
 	}else {
-		infoStatus = true;
+		isInfoPanelOpen = true;
 	}
-	info_panel.classList.toggle('hidden');
+	infoPanel.classList.toggle('hidden');
 })
 
-dir_sign.addEventListener('click', () => {
-	if(direction == 1) {
-		direction = -1
-		dir_sign.innerHTML = '右';
-	}else {
-		direction = 1;
-		dir_sign.innerHTML = '左';
-	}
-})
+homeButton.addEventListener('click', () => {
+	window.location.href = '/index.php';
+});
