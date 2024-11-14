@@ -31,9 +31,16 @@ CSS
 └─ index.php              全てのアクセスを受け付けるファイル
 ```
 
+# フロー
+
+`index.php`での処理の流れは次のフリーチャートの通りです。
+
+![フローチャート](https://github.com/user-attachments/assets/f48187fd-8fba-414e-9b24-4f23ade6150c)
+
 # デプロイ
 
 サーバーへのアップロードは`GitHub`で自動化されています。
+
 `main`ブランチに`push`した変更は即座にサーバーへ反映されます。
 
 # XAMPP
