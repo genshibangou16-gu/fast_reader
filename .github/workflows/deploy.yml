@@ -6,8 +6,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: test
-        run: echo ${{ secrets.DEPLOY_HOST }}
       - name: Upload
         uses: appleboy/ssh-action@master
         with:
@@ -15,8 +13,6 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           port: ${{ secrets.DEPLOY_PORT }}
           key: ${{ secrets.DEPLOY_KEY }}
-          protocol: tcp6
-          proxy_protocol: tcp6
           script: |
             cd ${{ secrets.DEPLOY_DIR }}
             git pull origin main
