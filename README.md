@@ -33,6 +33,8 @@ CSS
 
 # フロー
 
+`index.php`での処理の流れは次のフリーチャートの通りです。
+
 ![フローチャート](https://github.com/user-attachments/assets/f48187fd-8fba-414e-9b24-4f23ade6150c)
 
 # 参考
