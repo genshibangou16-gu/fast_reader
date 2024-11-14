@@ -7,9 +7,7 @@ body {
 }
 
 div.book_list {
-	height: 100vh;
     height: 100dvh;
-/**	height: calc(var(--vh,1vh)*100);**/
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -28,9 +26,7 @@ a.book_list {
 }
 
 #frame {
-	height: 100vh;
     height: 100dvh;
-/**	height: calc(var(--vh,1vh)*100);**/
 	width: 100%;
 	background-color: gray;
 }
@@ -63,7 +59,6 @@ a.book_list {
 
 #info, #direction {
 	height: 100%;
-	width: 10vh;
 	width: 10dvh;
 	display: flex;
 	justify-content: center;
@@ -72,10 +67,6 @@ a.book_list {
 
 #dir_sign {
 	display: block;
-	width: calc(3vh - 2px);
-	height: calc(3vh - 2px);
-	line-height: calc(3vh - 2px);
-	border-radius: 1.5vh;
 	width: calc(3dvh - 2px);
 	height: calc(3dvh - 2px);
 	line-height: calc(3dvh - 2px);
@@ -83,11 +74,10 @@ a.book_list {
 	border: 2px solid #fff;
 	text-align: center;
 	font-weight: bold;
+	font-size: 0.8em;
 }
 
 #info_img {
-	height: 3vh;
-	width: 3vh;
 	height: 3dvh;
 	width: 3dvh;
 	object-fit: contain;
@@ -112,7 +102,6 @@ a.book_list {
 	position: absolute;
 	max-width: calc(100% - 80px);
 	height: auto;
-	top: calc(10px + 1vh * 10);
 	top: calc(10px + 1dvh * 10);
 	right: 10px;
 	color: white;
