@@ -11,6 +11,8 @@ const info_img = document.getElementById('info_img');
 const info_panel = document.getElementById('info_panel');
 const id = document.getElementById('id').value;
 const td = document.querySelectorAll('.td');
+const pageMax = Number(document.getElementById('pageMax').value);
+const extension = document.getElementById('extension').value;
 
 let is_touched = false;
 let touchInfo = null;
@@ -18,12 +20,10 @@ let callbackID = null;
 let startCoord = null;
 let pageNum = null;
 let direction = 1;
-let pageMax = 0;
 let infoStatus = false;
-let format = 'png';
 
 function load_index() {
-	pageMax = Number(document.getElementById('pageMax').value);
+	pageMax = 
 	textarea.innerHTML = `${pageNum}/${pageMax}ページ`;
 	fetch(`books/${id}/index.json`)
 	.then((response) => {
@@ -42,7 +42,7 @@ function load_index() {
 			}else {
 				dir_sign.innerHTML = '右';
 			}
-			page.src = `books/${id}/${('00'+pageNum).slice(-2)}.${format}`;
+			page.src = `books/${id}/${('00'+pageNum).slice(-2)}.${extension}`;
 			page.classList.remove('hidden');
 		});
 	})
