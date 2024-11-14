@@ -15,26 +15,29 @@ CSS
 ```
 /
 ├─ books
-│  ├─ [book_id]
-│  │  ├─ 01.png
+│  ├─ [book_id]           本の画像を入れておくフォルダ
+│  │  ├─ 01.png           画像ファイルの拡張子は何でもよいが、フォルダ内で統一すること
 │  │  ├─ 02.png
 │  │  ├─ ...
-│  │  └─ index.json
+│  │  └─ index.json       本の情報を書いておくファイル
 │  └─ ...
-├─ src
-│  ├─ function.php
-│  ├─ home.svg
-│  ├─ index.js
-│  ├─ info.svg
-│  └─ style.css
-├─ favicon.ico
-└─ index.php
+├─ src                    ユーザーが直接アクセスしないファイルを入れておくフォルダ
+│  ├─ function.php        phpの処理に使う関数が書いてあるファイル
+│  ├─ home.svg            ホームアイコン
+│  ├─ index.js            ページめくりやページ保存等を制御しているファイル
+│  ├─ info.svg            インフォアイコン
+│  └─ style.css           デザインを決めているファイル
+├─ favicon.ico            ブラウザのアイコンに使われるファイル
+└─ index.php              全てのアクセスを受け付けるファイル
 ```
 
-# 参考
+# デプロイ
 
-### XAMPP
+サーバーへのアップロードは`GitHub`で自動化されています。
+`main`ブランチに`push`した変更は即座にサーバーへ反映されます。
 
-PHPの実行にはXAMPPという環境が必要です。
+# XAMPP
+
+ローカル環境でのPHPの実行にはXAMPPという環境が必要です。
 
 [ここ](https://www.apachefriends.org/jp/index.html)からインストールしてください。
