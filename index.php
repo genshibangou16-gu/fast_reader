@@ -1,11 +1,3 @@
-<?php
-
-function replaceHtml($i) {
-	return htmlspecialchars($i, ENT_QUOTES, 'UTF-8');
-}
-
-?>
-
 <!doctype html>
 <html lang="ja">
 <head>
@@ -18,34 +10,71 @@ function replaceHtml($i) {
 </head>
 <body>
 
+<!-- ここからPHP -->
 <?php
+// functions.phpから関数を読み込む
+require_once('functions.php');
 
+// idパラメーターの有無を確認
 if(isset($_GET['id'])) {
-    $id = replaceHtml($_GET['id']);
+	// ~~~ パラメーターあり ~~~
+	// => 本を表示
+
+	// idパラメーターの値を取得
+    $id = replaceSpecialChars($_GET['id']);
+	// idパラメーターが空の場合はトップページにリダイレクト
     if(empty($id)) {
         header('Location: /index.php', true, 302);
         exit();
-    }else {
-        $pageMax = count(glob('books/' . $id . '/*')) - 1;
-        if(isset($_COOKIE[$id])) {
-            $pageNum = replaceHtml($_COOKIE[$id]);
-        }else {
-            $pageNum = 1;
-        }
     }
-}else {
-	$books = glob('books/*');
-	$body = '<div class="book_list"><h1 class="book_list">List of books</h1>';
-	foreach($books as $i) {
-		$index = json_decode(file_get_contents($i . '/index.json'), true);
-		$body = $body . '<a class="book_list" href="index.php?id=' . substr($i, 6, 8) . '">' . $index['title'] . '</a>';
+	// idパラメーターのフォルダが存在しない場合はトップページにリダイレクト
+	if(!file_exists('books/' . $id)) {
+		header('Location: /index.php', true, 302);
+		exit();
 	}
-	$body = $body . '</div></body>';
+	// idパラメーターのフォルダ内のファイル数を取得
+	$pageMax = count(glob('books/' . $id . '/*')) - 1;
+	// ページ番号を保存したcookieの有無を確認
+	if(isset($_COOKIE[$id])) {
+		// 保存したcookieがある場合はページ番号を取得
+		$pageNum = replaceSpecialChars($_COOKIE[$id]);
+	}else {
+		// 保存したcookieがない場合は1ページ目を表示
+		$pageNum = 1;
+	}
+	// 本の拡張子を取得
+	// ※ 本の拡張子は全ページ同じと仮定
+	$extension = pathinfo(glob('books/' . $id . '/*')[$pageNum], PATHINFO_EXTENSION);
+}else {
+	// ~~~ パラメーターなし ~~~
+	// => 本リストを表示
+
+	// booksフォルダ内のフォルダ名を取得
+	$books = glob('books/*');
+	// booksフォルダ内にフォルダがない場合はトップページにリダイレクト
+	if(empty($books)) {
+		header('Location: /index.php', true, 302);
+		exit();
+	}
+	$body = <<<EOL
+	<div class="book_list">
+		<h1 class="book_list">List of books</h1>
+	EOL;
+	foreach($books as $i) {
+		$id = basename($i);
+		$bookInfo = getBookInfo($id);
+		$body = $body . '<a class="book_list" href="index.php?id=' . $id . '">' . $bookInfo['title'] . '</a>';
+	}
+	$body = $body . <<<EOL
+	</div>
+	</body>
+	EOL;
 	echo $body;
 	exit();
 }
 
 ?>
+<!-- ここまでPHP -->
 
 <body>
 	<div id="frame">
@@ -73,6 +102,7 @@ if(isset($_GET['id'])) {
 	<input id="id" type="hidden" value="<?=$id?>">
 	<input id="pageMax" type="hidden" value="<?=$pageMax?>">
 	<input id="pageNum" type="hidden" value="<?=$pageNum?>">
+	<input id="extension" type="hidden" value="<?=$extension?>">
 	
 	<script src="index.js?ver1" defer></script>
 </body>
