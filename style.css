@@ -6,7 +6,7 @@ body {
 	font-family: sans-serif;
 }
 
-div.alin {
+div.book_list {
 	height: 100vh;
     height: 100dvh;
 /**	height: calc(var(--vh,1vh)*100);**/
@@ -17,11 +17,11 @@ div.alin {
 	justify-content: center;
 }
 
-h1.alin {
+h1.book_list {
 	margin-top: 0;
 }
 
-a.alin {
+a.book_list {
 	line-height: 2em;
 	text-decoration: none;
 	color: black;

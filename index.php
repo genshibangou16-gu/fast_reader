@@ -33,10 +33,10 @@ if(isset($_GET['id'])) {
     echo $head;
 }else {
 	$books = glob('books/*');
-	$body = $head . '<body><div class="alin"><h1 class="alin">List of books</h1>';
+	$body = $head . '<body><div class="book_list"><h1 class="book_list">List of books</h1>';
 	foreach($books as $i) {
 		$index = json_decode(file_get_contents($i . '/index.json'), true);
-		$body = $body . '<a class="alin" href="index.php?id=' . substr($i, 6, 8) . '">' . $index['title'] . '</a>';
+		$body = $body . '<a class="book_list" href="index.php?id=' . substr($i, 6, 8) . '">' . $index['title'] . '</a>';
 	}
 	$body = $body . '</div></body>';
 	echo $body;
