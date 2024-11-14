@@ -4,7 +4,8 @@ function replaceHtml($i) {
 	return htmlspecialchars($i, ENT_QUOTES, 'UTF-8');
 }
 
-$head = <<<EOE
+?>
+
 <!doctype html>
 <html lang="ja">
 <head>
@@ -15,7 +16,8 @@ $head = <<<EOE
 	<meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#000000">
 </head>
-EOE;
+
+<?php
 
 if(isset($_GET['id'])) {
     $id = replaceHtml($_GET['id']);
@@ -30,10 +32,9 @@ if(isset($_GET['id'])) {
             $pageNum = 1;
         }
     }
-    echo $head;
 }else {
 	$books = glob('books/*');
-	$body = $head . '<body><div class="book_list"><h1 class="book_list">List of books</h1>';
+	$body = '<body><div class="book_list"><h1 class="book_list">List of books</h1>';
 	foreach($books as $i) {
 		$index = json_decode(file_get_contents($i . '/index.json'), true);
 		$body = $body . '<a class="book_list" href="index.php?id=' . substr($i, 6, 8) . '">' . $index['title'] . '</a>';
