@@ -16,6 +16,7 @@ function replaceHtml($i) {
 	<meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#000000">
 </head>
+<body>
 
 <?php
 
@@ -34,7 +35,7 @@ if(isset($_GET['id'])) {
     }
 }else {
 	$books = glob('books/*');
-	$body = '<body><div class="book_list"><h1 class="book_list">List of books</h1>';
+	$body = '<div class="book_list"><h1 class="book_list">List of books</h1>';
 	foreach($books as $i) {
 		$index = json_decode(file_get_contents($i . '/index.json'), true);
 		$body = $body . '<a class="book_list" href="index.php?id=' . substr($i, 6, 8) . '">' . $index['title'] . '</a>';
